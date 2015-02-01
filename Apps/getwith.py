@@ -24,7 +24,7 @@ class GetWith(object):
         
         print("命令\t\t官方文档\t\t\t\t中文描述")
         print("myxuid\t\tAccount XUID\t\t\t【Account XUID】")
-        print("gxuid\t\tGamertag XUID\t\t\t\t【根据gametag 获取 XUID】")
+        print("gxuid\t\tGamertag XUID\t\t\t【根据gametag 获取 XUID】")
         print("onegames\tXbox ONE Games\t\t\t【根据xuid获取所有xbox one 的游戏】")
       
         while True:
