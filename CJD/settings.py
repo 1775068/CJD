@@ -1,5 +1,5 @@
 """
-Django settings for Admin project.
+Django settings for CJD project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -48,9 +48,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'Admin.urls'
+ROOT_URLCONF = 'CJD.urls'
 
-WSGI_APPLICATION = 'Admin.wsgi.application'
+WSGI_APPLICATION = 'CJD.wsgi.application'
 
 
 # Database
@@ -83,7 +83,7 @@ STATICFILES_DIRS = (
 
 LANGUAGE_CODE = 'zh-cn'
 
-TIME_ZONE = 'Asia/BeiJing'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
