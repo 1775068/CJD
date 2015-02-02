@@ -3,7 +3,7 @@ Created on 2015年2月1日
 
 @author: oTyg
 '''
-
+@test push
 import time
 from threading import Thread
 
