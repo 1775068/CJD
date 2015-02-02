@@ -5,7 +5,6 @@ Created on 2015年2月1日
 '''
 
 class MyClass(object):
-   
 
     ID = 0
     GameTypeID = 0
@@ -19,7 +18,3 @@ class MyClass(object):
     MaxGuideCount = 0
     Status = 0
     ReleaseDate = ""
-    
-    
-    
-    
