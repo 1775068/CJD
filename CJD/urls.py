@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 #from django.contrib import admin
 
 from controller import account
+from controller import games
 
 #import settings.STATICFILES_DIRS
 
@@ -13,5 +14,8 @@ urlpatterns = patterns('',
     #url(r'^admin/', include(admin.site.urls)),
     url(r'^index/', account.index),
     url(r'^login/', account.login),
+    
+    
     url(r'^t/', account.template),
+    url(r'^games/', games.index),
 )
