@@ -18,20 +18,28 @@ class GetXBoxOneGames(getbase.GetBase):
         
     def ParseGetJson(self,json):
      
-        #print("titles:" , json["titles"])
+        print("titles:" , json["titles"])
         titles = json["titles"]
         for items in titles:
-            lastUnlock = items["lastUnlock"]
-            titleId = items["titleId"]
-            serviceConfigId = items["serviceConfigId"]
             titleType = items["titleType"]
-            platform = items["platform"]
             name = items["name"]
-            earnedAchievements = items["earnedAchievements"]
-            currentGamerscore = items["currentGamerscore"]
-            maxGamerscore = items["maxGamerscore"]
+            titleId = items["titleId"]
+            maxGamerscore = items["maxGamerscore"]    #总成就分
+            #lastUnlock = items["lastUnlock"]
+            #serviceConfigId = items["serviceConfigId"]
+            #platform = items["platform"]
+            #earnedAchievements = items["earnedAchievements"]
+            #currentGamerscore = items["currentGamerscore"]
             if(titleType == "DGame"):
-                print(name) 
+                #print("lastUnlock:", lastUnlock) 
+                #print("serviceConfigId:", serviceConfigId)
+                #print("platform:", platform)
+                #print("earnedAchievements:", earnedAchievements)
+                #print("currentGamerscore:", currentGamerscore)
+                print("name:", name)
+                print("titleId:", titleId)
+                print("titleType:", titleType)
+                print("maxGamerscore:", maxGamerscore)
         
         
         

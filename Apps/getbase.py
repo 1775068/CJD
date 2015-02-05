@@ -17,8 +17,13 @@ class GetBase(object):
     APIUrl = ""
     XUID = ""
     GAMETAG = ""
+    GAMEID = ""
     #API Key
-    _headers = {'X-AUTH' : '553c59589f97a86fca248cc0e4ba1d61bb6c4a90'}
+    _headers = {
+                
+                'X-AUTH' : '553c59589f97a86fca248cc0e4ba1d61bb6c4a90',
+                'Accept-Language' : 'en-US'
+                }
     
     
     def __init__(self):
