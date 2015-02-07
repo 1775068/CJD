@@ -32,44 +32,57 @@ class GetWith(object):
         print("gameinfo\tXbox Game Information\t\t【根据titleid获取游戏详细信息】")
         print("cj\t\tXbox Game Achievements\t\t【根据xuid,titleid获取成就信息】")
         print("profile\t\tProfile\t\t\t\t【根据xuid获取个人信息】")
-      
+       
         while True:
             print("\n请输入命令:")
             ps = input()
             
             if(ps == "myxuid"):
+                print("runing......")
                 getaccountxuid.GetAccountXUID().GetJsonData()
-            
+                print("down......")
             if(ps == "gxuid"):
                 print("请输入GameTag:")
                 tag = input()
-                
+                print("runing......")
                 getxuidwithtag.GetXUIDWithTag(tag).GetJsonData()
-                pass
-                
+                print("down......")
             if(ps == "onegames"):
-                #print("请输入XUID:")
-                #xuid = input()
-                xuid = "2584878536129841"
+                print("请输入XUID:")
+                xuid = input()
+                if(xuid==""):
+                    xuid = "2584878536129841"
+                print("runing......")
                 getxboxonegames.GetXBoxOneGames(xuid).GetJsonData()
-            
+                #print("down......")
             if(ps == "gameinfo"):
                 print("获取游戏详细信息，请输入titleid:")
                 titleid = input()
-                getgameinfo.GetGameInfo(titleid).GetJsonData()
+                if(titleid==""):
+                    titleid = "2147358433"
+                print("runing......")
+                x = getgameinfo.GetGameInfo(titleid)
+                x.GetJsonData()
+                print("down......")
             if(ps == "cj"):
                 xuid = "2584878536129841"
                 print("请输入titleid:")
                 titleid = input()
                 if(titleid==""):
                     titleid = "2147358433"
+                print("runing......")
                 getachievements.GetAchievements(xuid,titleid).GetJsonData()
+                print("down......")
             if(ps == "profile"):
                 print("请输入xuid:")
                 xuid = input()
                 if(xuid == ""):
                     xuid = "2584878536129841"
+                print("runing......")
                 getprofile.GetProfile(xuid).GetJsonData()
+                print("down......")
+
+                
 
 x = GetWith()
         

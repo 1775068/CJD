@@ -8,39 +8,50 @@ import getbase
 import os
 import sys
 """
+import DataProvider.onegames
+import common
+
 class GetGameInfo(getbase.GetBase):
     '''
              获取游戏信息
             条件 ：bygameid
     '''
-     
 
+    global imgSavepath     
+    global titleid
     def __init__(self, titleid):
         self.GAMEID = self.dec2hex(titleid)
-        #print (self.GAMEID)
         self.APIUrl = "https://xboxapi.com/v2/game-details-hex/"+ self.GAMEID
-        
+        self.imgSavepath = "../static/gameimg/"
+        self.titleid = titleid
+        #print("imgSavepath1=",self.imgSavepath)
         
     def ParseGetJson(self,json):
         #print(json)
-        
         js = json["Items"]
-
-        PublisherName = js[0]["PublisherName"]#发行商
-        DeveloperName = js[0]["DeveloperName"]#开发商
-        ReleaseDate = js[0]["ReleaseDate"]#发行时间
         
+        publisherName = js[0]["PublisherName"]#发行商
+        developerName = js[0]["DeveloperName"]#开发商
+        releaseDate = js[0]["ReleaseDate"]    #发行时间
+        gamename = js[0]["Name"]              #游戏名称
+        
+        global imgurl
         its = js[0]["Images"]
        
         for it in its:
             if it["Purposes"][0] == "BrandedKeyArt":
-                img1 = it["ResizeUrl"]
-                #img2 = it["Url"]
-                print (img1)
-                #print (img2)
-            
-        print (PublisherName , DeveloperName , ReleaseDate ,img1 )
-        
+                imgurl = it["ResizeUrl"]
+
+        #print (publisherName , developerName , releaseDate ,imgurl)
+        #print("imgSavepath=",self.imgSavepath+name , imgurl)
+        self.imgSavepath = self.imgSavepath + gamename + ".png"
+        down = common.DownImg(imgurl, self.imgSavepath)
+        downsuccess = down[0]
+        filename = down[1]
+        print("图片下载结果：",downsuccess )
+        if(downsuccess):
+            x = DataProvider.onegames.OneGames().UpDateGameInfoBytitleid(self.titleid , gamename,publisherName, developerName, releaseDate, filename)
+            print("游戏信息更新结果：",x)
     
     
     
