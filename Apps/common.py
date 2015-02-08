@@ -13,16 +13,17 @@ import urllib
 def DownImg(url,savepath):
 
     try:
+        print(url)
         req = urllib.request.urlopen(url)
         req = req.read()
-        print(len(req))
+        #print(len(req))
         if(not req ):
             return(False,None)
         
         file = open(savepath,"wb" )
         file.write(req)
         file.close()
-        return(True, savepath.replace("..","").replace(" ",""))
+        return(True, savepath)
     except IOError as e:
         print("error",e)
         return(False,None)

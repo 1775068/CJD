@@ -19,11 +19,14 @@ class GetGameInfo(getbase.GetBase):
 
     global imgSavepath     
     global titleid
+
     def __init__(self, titleid):
         self.GAMEID = self.dec2hex(titleid)
         self.APIUrl = "https://xboxapi.com/v2/game-details-hex/"+ self.GAMEID
         self.imgSavepath = "../static/gameimg/"
         self.titleid = titleid
+     
+        
         #print("imgSavepath1=",self.imgSavepath)
         
     def ParseGetJson(self,json):
@@ -32,19 +35,23 @@ class GetGameInfo(getbase.GetBase):
         
         publisherName = js[0]["PublisherName"]#发行商
         developerName = js[0]["DeveloperName"]#开发商
-        releaseDate = js[0]["ReleaseDate"]    #发行时间
+        
+        releaseDate = ""
+        
+        if( "ReleaseDate" in js[0] ):
+            releaseDate = js[0]["ReleaseDate"]
+        else:
+            releaseDate = js[0]["Updated"]     #发行时间
+            
         gamename = js[0]["Name"]              #游戏名称
         
-        global imgurl
         its = js[0]["Images"]
-       
+        global imgurl
         for it in its:
             if it["Purposes"][0] == "BrandedKeyArt":
                 imgurl = it["ResizeUrl"]
-
-        #print (publisherName , developerName , releaseDate ,imgurl)
-        #print("imgSavepath=",self.imgSavepath+name , imgurl)
-        self.imgSavepath = self.imgSavepath + gamename + ".png"
+        
+        self.imgSavepath = self.imgSavepath + str(self.titleid) + ".png" #.replace("..","").replace(" ","") + ".png"
         down = common.DownImg(imgurl, self.imgSavepath)
         downsuccess = down[0]
         filename = down[1]
@@ -52,6 +59,7 @@ class GetGameInfo(getbase.GetBase):
         if(downsuccess):
             x = DataProvider.onegames.OneGames().UpDateGameInfoBytitleid(self.titleid , gamename,publisherName, developerName, releaseDate, filename)
             print("游戏信息更新结果：",x)
+        
     
     
     

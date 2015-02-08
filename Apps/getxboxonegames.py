@@ -29,8 +29,7 @@ class GetXBoxOneGames(getbase.GetBase):
         for items in titles:
             titleType = items["titleType"]
             #name = items["name"]
-            titleId = items["titleId"]
-            #maxGamerscore = items["maxGamerscore"]    #总成就分
+            
             #lastUnlock = items["lastUnlock"]
             #serviceConfigId = items["serviceConfigId"]
             #platform = items["platform"]
@@ -38,6 +37,8 @@ class GetXBoxOneGames(getbase.GetBase):
             #currentGamerscore = items["currentGamerscore"]
             x = DataProvider.onegames.OneGames()
             if(titleType == "DGame"):
+                titleId = items["titleId"]
+                maxGamerscore = items["maxGamerscore"]    #总成就分
                 #print("lastUnlock:", lastUnlock) 
                 #print("serviceConfigId:", serviceConfigId)
                 #print("platform:", platform)
@@ -46,21 +47,23 @@ class GetXBoxOneGames(getbase.GetBase):
                 #print("name:", name)
                 #print("titleId:", titleId)
                 #print("titleType:", titleType)
-                #print("maxGamerscore:", maxGamerscore)
-                
-                tag = x.NewGameTitleID(titleId)
+               
+                tag = x.NewGameTitleID(titleId,maxGamerscore)
                 insertsuccess = tag[0]         #是否成功插入titleid或者该titleid已经存在
                 imgsuccess = tag[1]            #是否已经抓取了其他游戏相关信息
+
+                
                 if(insertsuccess == False):
                     print("操作失败,取下一条......")
                     continue
                 if(imgsuccess):
-                    print(titleId , "已存在,继续 ...")
+                    print(titleId , "图片已存在,继续 ...")
                     continue
                 else:
-                    global _thread 
-                    self._thread = Thread(target=self.gameInfo,args=(titleId,))
-                    self._thread.start()
+                    print("游戏(titleid:",titleId,")已存在,游戏信息不存在,\n开始获取游戏(titleid:",titleId,")信息、更新分数、下载游戏图片......")
+                    getgameinfo.GetGameInfo(titleId).GetJsonData()
+                    print("游戏(titleid:" ,titleId ,")信息更新完成......\n-------------------------")
+
                     
                     #return
                     

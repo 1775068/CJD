@@ -38,8 +38,18 @@ class MySqlBase(object):
         #self.closeConn()
         pass
     
+    #获取数据集
+    def GetAllData(self,sql):
+        #self.OpenConn()
+        #_cursor.execute(sql)
+        #self._firewall()
+        _conn = connector.connect(user=self.USER,password=self.PWD,host=self.HOST,port = self.PORT,database=self.DB)
+        _cursor = _conn.cursor()
+        _cursor.execute(sql)
+        return _cursor.fetchall()
+
     #获取一个数据
-    def GetData(self,sql):
+    def GetOneData(self,sql):
         #self.OpenConn()
         #_cursor.execute(sql)
         #self._firewall()
@@ -48,7 +58,14 @@ class MySqlBase(object):
         _cursor.execute(sql)
         return _cursor.fetchone()
     
-    def IsExists(self,sql):
+    
+    """
+           判断数据是否存在，如果存在则返回数据
+    return (False,None)
+    [0]: 是否存在数据
+    [1]: 如果存在则返回数据
+    """
+    def IsExistsBack(self,sql):
         """
         if(self.openConn() == False):
             self.openConn()
@@ -58,8 +75,9 @@ class MySqlBase(object):
         _cursor.execute(sql)
         result = _cursor.fetchone()
         if( result is None):
-            return False
-        return True
+            return (False,None)
+        return (True,result)
+    
     
     def OpenConn(self):
         _conn = connector.connect(user=self.USER,password=self.PWD,host=self.HOST,port = self.PORT,database=self.DB)
