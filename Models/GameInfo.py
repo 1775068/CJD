@@ -4,7 +4,7 @@ Created on 2015年2月1日
 @author: oTyg
 '''
 
-class MyClass(object):
+class GameInfo(object):
 
     ID = 0
     GameTypeID = 0

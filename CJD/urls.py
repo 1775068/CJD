@@ -5,6 +5,7 @@ from controller import account
 from controller import games
 
 #import settings.STATICFILES_DIRS
+import pager
 
 urlpatterns = patterns('',
     # Examples:
@@ -18,4 +19,14 @@ urlpatterns = patterns('',
     
     url(r'^t/', account.template),
     url(r'^games/', games.index),
+    
+    
+    
+    
+    url(r'^ajax_gamesindex/', games.ajax_index),
+    url(r'^ajax_upgamenamecn/', games.ajax_update_gameNameCN),
+    url(r'^ajax_upgamestatus/', games.ajax_update_gamestatus),
+    
+    url(r'^pager/$', pager.pager),
+    
 )

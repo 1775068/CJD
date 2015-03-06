@@ -6,6 +6,7 @@ Created on 2015年2月7日
 #encoding=encode
 import DataProvider.mysqlbase
 from Models.achievements import  *
+from Models.GameInfo import  GameInfo
 
 
 class OneGames(DataProvider.mysqlbase.MySqlBase):
@@ -113,8 +114,27 @@ class OneGames(DataProvider.mysqlbase.MySqlBase):
     '''
     def UpDateGameInfoBytitleid(self,titleid,gamename,publisherName , developerName , releaseDate ,img ):
         sql = 'update games set GameName="'+gamename+'",' + ' publisherName="'+publisherName +'",' + 'developerName="'+developerName  +'",releaseDate=DATE_FORMAT("'+releaseDate[:10]+'","%Y~%m~%d"),imgURL="'+img +'" where titleid='+str(titleid)+';'
-        #print(sql)
         return self.ExeSQL(sql)
+    
+    '''
+            获取游戏页面分页数据
+    '''
+    def PageGames(self,pageindex):
+        sql = 'select ID,GameName,GameTypeID,GameName_CN,Status FROM GAMES ORDER BY ID DESC LIMIT ' + str((int(pageindex)-1)*20) + ',20;'
+        sql2 = 'select count(*) from GAMES;'
+        count = self.GetOneData(sql2)
+        return self.GetAllData(sql),count
+    
+    def UpdateGameNameCN(self,GameInfo):
+        sql = 'update games set GameName_CN = "' +GameInfo.GameName_CN + '" where ID = ' + GameInfo.ID
+        return self.ExeSQL(sql)
+        
+    def UpdateGameStatus(self,GameInfo):
+        
+        sql = 'update games set Status = ' + GameInfo.Status + ' where ID = ' + GameInfo.ID
+        print(sql)
+        return self.ExeSQL(sql)
+       
     
     
     

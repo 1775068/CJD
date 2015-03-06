@@ -46,7 +46,7 @@ class MySqlBase(object):
         _conn = connector.connect(user=self.USER,password=self.PWD,host=self.HOST,port = self.PORT,database=self.DB)
         _cursor = _conn.cursor()
         _cursor.execute(sql)
-        return _cursor.fetchall()
+        return _cursor.fetchall() 
 
     #获取一个数据
     def GetOneData(self,sql):

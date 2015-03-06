@@ -32,7 +32,7 @@ class GetWith(object):
         print("gameinfo\tXbox Game Information\t\t【根据titleid获取游戏详细信息】")
         print("cj\t\tXbox Game Achievements\t\t【根据xuid,titleid获取成就信息】")
         print("profile\t\tProfile\t\t\t\t【根据xuid获取个人信息】")
-        print("upcj\t\t upcj \t\t\t\t【更新数据库游戏的成就】")
+        print("upcj\t\tupcj \t\t\t\t【更新数据库游戏的成就】")
         while True:
             print("\n请输入命令:")
             ps = input()
