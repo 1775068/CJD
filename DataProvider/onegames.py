@@ -132,9 +132,22 @@ class OneGames(DataProvider.mysqlbase.MySqlBase):
     def UpdateGameStatus(self,GameInfo):
         
         sql = 'update games set Status = ' + GameInfo.Status + ' where ID = ' + GameInfo.ID
-        print(sql)
-        return self.ExeSQL(sql)
        
+        return self.ExeSQL(sql)
     
-    
+    #某游戏的成就列表 
+    def AchievementsDetail(self,gameid,pageindex):
+        sql = 'select ID,Name,Name_Cn,Description,Description_Cn,GuideCount from achievements where GameID = '+gameid+' ORDER BY ID DESC LIMIT ' + str((int(pageindex)-1)*20) + ',20;'
+         
+        sql2 = 'select count(*) from achievements where gameID ='+gameid
+        count = self.GetOneData(sql2)
+        
+        return self.GetAllData(sql),count
+    #更新成就名称和描述    
+    def UpdateAchievementsDetail(self,aid,name_cn,description_cn):
+        sql = 'update achievements set Name_Cn="'+name_cn+'" , Description_Cn ="' +description_cn+'" where id ='+aid
+        return self.ExeSQL(sql)
+        
+        
+        
     

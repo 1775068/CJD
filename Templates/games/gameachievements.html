@@ -1,0 +1,117 @@
+ {% extends "base.html" %}
+ 
+ {% block content %}
+
+<link rel="stylesheet" href="/static/css/style.css" type="text/css" />
+<link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
+<link rel="stylesheet" href="/static/css/reset.css" type="text/css" />
+
+<script type="text/javascript" src="/static/js/base.js"></script>
+<script type="text/javascript" src="/static/js/jquery.page.js"></script>
+
+    <div class="contentTop">
+        <span class="pageTitle"><span class="icon-screen"></span>游戏列表</span>
+        <div class="clear"></div>
+    </div>
+    
+    <!-- Breadcrumbs line -->
+    <div class="breadLine">
+        <div class="bc">
+            <ul id="breadcrumbs" class="breadcrumbs">
+                <li><a href="/games">游戏列表</a></li>
+                <li class="current"><a href="#">游戏成就列表</a></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+   <div class = "wrapper">
+   <div class="list-box" style="width:1650px; height:900px;" >
+   <div class="handel"><h6>查询结果</h6><div class="clear"></div></div>
+   <div class="list">
+    <ul><li style="width:40px">编号</li><li style="width:130px">成就名称</li><li style="width:240px">翻译</li><li style="width:630px">成就描述</li><li style="width:295px">描述翻译</li><li style="width:60px">攻略发表数</li><li style="width:60px">操作</li></ul>
+   </div>
+      <div class="page-box">
+        <div class="info">显示 1 至 10 条</div>
+        <div class="page">
+            <a class="first n" href="javascript:;">首页</a>
+            <a class="prev n" href="javascript:;">上一页</a>
+            <em class="numbers">
+            <a class="hover" href="javascript:;">1</a>
+            <a href="javascript:;">2</a>
+            <a href="javascript:;">3</a>
+            <a href="javascript:;">4</a>
+            <a href="javascript:;">5</a>
+            </em>
+            <a class="next" href="javascript:;">下一页</a>
+            <a class="last" href="javascript:;">末页</a>
+        </div>
+    </div>
+  </div>
+</div>
+  
+ <script type="text/javascript">
+ 
+    var detaillist = '<ol${olCls}><li style="width:40px">${ID}</li><li style="width:130px">${Name}</li><li style="width:240px"> <input id="name_cn" type="text" value=  "${Name_Cn}"   ></li><li style="width:630px">${Description}</li><li style="width:295px"><input type="text" value=  "${Description_Cn}"   id="description_cn" ></li><li style="width:60px">${GuideCount}</li><li style="width:60px"><a onclick="Edit(this)">修改</a></li></ol>';
+    function GetSignList() {
+    	
+    	gameid = getQueryString('gameid'); 
+    	jQuery.ajaxPager({
+            'listElem': $('.list'),
+            'pageElem': $('.page-box'),
+            'url': "/ajax_gameachievementsdetail/",
+            'urlData': { 
+            	 'gameid':gameid
+            },
+            'callback': function (data, opt) {
+            	
+                if (data.RecordCount == 0 || data.RecordCount == '' || data.RecordCount == undefined) {
+                    var ol = $('<ol />').appendTo(opt.listElem);
+                    $('<li />').appendTo(ol).css('width', ol.css('width')).text("无数据");
+                    return;
+                }
+                $(data.Signlist).each(function (i) {
+                    i % 2 === 1 ? (this.olCls = ' class="even"') : (this.olCls = '');
+                    $(YY.mix(detaillist, this)).appendTo(opt.listElem);
+                });
+            }
+        });
+    }
+
+    GetSignList();
+ 
+   function Edit(thas){
+	   aid = thas.parentNode.parentNode.firstChild.innerHTML;
+	   name_cn = $(thas).parent().parent().children().find("#name_cn").val();
+	   description_cn = $(thas).parent().parent().children().find("#description_cn").val();
+	   
+	   
+	   $.ajax({
+           url: "/ajax_upgameachievements/",
+           data: {
+               "aid": aid,
+               "name_cn":name_cn,
+               "description_cn":description_cn
+           },
+           type: "post",
+           dataType: "json",
+           success: function (data) {
+          	 if (data == true){
+          		 alert("修改成功。")
+          	 }else{
+          		 alert("修改失败。")
+          	 }
+           }
+       });
+	   
+	   
+   }
+   function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+    }
+</script>
+
+    {% endblock %}
+    

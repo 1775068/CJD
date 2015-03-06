@@ -68,6 +68,7 @@ DATABASES = {
 """
 TEMPLATE_DIRS = (
                  os.path.join(BASE_DIR, "Templates"),
+                 os.path.join(BASE_DIR, "Templates\games"),
                  )
 
 """

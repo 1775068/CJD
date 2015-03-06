@@ -27,7 +27,7 @@
     </div>
     
    <div class = "wrapper">
-                 <div class="list-box" style="width:1600px; height:900px;" >
+                <div class="list-box" style="width:1600px; height:900px;" >
 				<div class="handel"><h6>查询结果</h6><div class="clear"></div></div>
 				<div class="list">
 				    <ul><li style="width:80px">ID</li><li style="width:80px">平台</li><li style="width:320px">游戏名称</li><li style="width:700px">中文名称</li><li style="width:280px">操作</li></ul>
@@ -52,7 +52,7 @@
       
   </div>
  <script type="text/javascript">
-    var userinf_list = '<ol${olCls}><li style="width:80px">${ID}</li><li style="width:80px">${GameType}</li><li style="width:320px">${GameName}</li><li style="width:700px"> <input type="text" value=  "${GameName_CN}"   id="gamename_cn" name="gamename_cn" size="100"> </li><li style="width:280px"><a onclick="EditGameName(this)">修改</a>&nbsp;&nbsp;${Status}&nbsp;&nbsp;<a>WEB</a></li></ol>';
+    var userinf_list = '<ol${olCls}><li style="width:80px">${ID}</li><li style="width:80px">${GameType}</li><li style="width:320px"><a href="/gameachievements?gameid=${ID}">${GameName} </a></li><li style="width:700px"> <input type="text" value=  "${GameName_CN}"   id="gamename_cn" name="gamename_cn" size="100"> </li><li style="width:280px"><a onclick="EditGameName(this)">修改</a>&nbsp;&nbsp;${Status}&nbsp;&nbsp;<a>WEB</a></li></ol>';
     function GetSignList() {
         jQuery.ajaxPager({
             'listElem': $('.list'),
@@ -70,7 +70,7 @@
 
                 $(data.Signlist).each(function (i) {
                     i % 2 === 1 ? (this.olCls = ' class="even"') : (this.olCls = '');
-                    this.Status = this.Status == "0" ? "<a onclick=\"HideGame(this,"+this.ID +","+this.Status+")\">隐藏</a>" : "<a onclick=\"HideGame(this,"+this.ID +","+this.Status+")\">显示</a>";
+                    this.Status = this.Status == "0" ? "<a onclick=\"HideGame(this,"+ this.ID +","+ this.Status + ")\">显示</a>" : "<a onclick=\"HideGame(this,"+this.ID +","+ this.Status + ")\">隐藏</a>";
 
                     $(YY.mix(userinf_list, this)).appendTo(opt.listElem);
                 });
@@ -108,7 +108,7 @@
     
     //隐藏游戏
     function HideGame(thas,id,status){
-    	/*
+    	 
     	if(status == "0"){
 	    	if(!confirm("确认隐藏？"))
 	    		return;
@@ -116,21 +116,21 @@
     		if(!confirm("确认显示？"))
 	    		return;
     	}
-    	*/
-    	//id = thas.parentNode.parentNode.firstChild.innerHTML
-    	status = status == 0 ? 1 : 0;
+
+    	upstatus = status == 0 ? 1 : 0;
+    	
     	 $.ajax({
              url: "/ajax_upgamestatus/",
              data: {
                  "id": id,
-                 "status":status
+                 "status":upstatus
              },
              type: "post",
              dataType: "json",
              success: function (data) {
             	 if (data == true){
             		 alert("修改成功。")
-            		 thas.innerHTML = thas.innerHTML == "隐藏" ? "<a onclick=\"HideGame(this,"+id+",1)\">显示</a>" :"<a onclick=\"HideGame(this,"+id+",0)\">隐藏</a>"
+            		 thas.innerHTML = thas.innerHTML == "隐藏" ? "显示" :"隐藏"
             	 }else{
             		 alert("修改失败。")
             	 }
